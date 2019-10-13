@@ -1,10 +1,13 @@
 import helper.FileHelper as FileHelper
+import setting
+import json
 
 class InitConfig:
     def __init__(self):
         self._intro()
         self._getProjectPath()
         self._getVCS()
+        self._save()
     def _intro(self):
         print("Welcome To Project Intializer!")
         print()
@@ -46,3 +49,9 @@ class InitConfig:
             print("\t\tInvalid Path")
             print()
             self._getProjectPath()
+    def _save(self):
+        my_settings = {}
+        my_settings['vcs'] = self._vcs
+        my_settings['path'] = self._projectPath
+        with open(setting.CONFIG_FILE, 'w') as config:
+            json.dump(my_settings, config)

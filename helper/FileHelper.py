@@ -11,3 +11,7 @@ def isFolder(file):
 def createFolder(file):
     my_folder = Path(file)
     return my_folder.mkdir(parents=True)
+
+def createFile(file):
+    my_file = Path(file)
+    return my_file.touch()
