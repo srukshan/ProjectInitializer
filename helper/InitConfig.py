@@ -1,4 +1,5 @@
 import helper.FileHelper as FileHelper
+import handler.LoginHandler as LoginHandler
 import setting
 import json
 
@@ -7,6 +8,8 @@ class InitConfig:
         self._intro()
         self._getProjectPath()
         self._getVCS()
+        if self._saveCredentials():
+            self._login()
         self._save()
     def _intro(self):
         print("Welcome To Project Intializer!")
@@ -16,14 +19,12 @@ class InitConfig:
     def _getVCS(self):
         print("First Lets Find your Favorite Version Control System")
         print("\t1. Github")
-        print("\t2. Bitbucket")
-        print("\t3. Gitlab")
         print()
         var = input("Select your preference : ")
         print()
         try:
             var = int(var)
-            if var>=1 and var<=3:
+            if var==1:
                 self._vcs = var
             else:
                 raise Exception()
@@ -49,9 +50,29 @@ class InitConfig:
             print("\t\tInvalid Path")
             print()
             self._getProjectPath()
+    def _saveCredentials(self):
+        prompt = input("Do you want to save your login Credentials? (y/n) ")
+        return prompt=="y"
+    def _login(self):
+        print("Please Enter your Login Credentials")
+        username = input("Username\t:\t")
+        password = input("Password\t:\t")
+        if self._vcs==1:
+            if LoginHandler.GithubLogin(username, password).verify():
+                self._username = username
+                self._password = password
+            else:
+                print("Invalid Credentials!")
+                return self._login()
+        else:
+            pass
     def _save(self):
         my_settings = {}
-        my_settings['vcs'] = self._vcs
+        my_settings['vcs'] = {
+            "type":self._vcs,
+            "username":self._username,
+            "password":self._password
+        }
         my_settings['path'] = self._projectPath
         with open(setting.CONFIG_FILE, 'w') as config:
             json.dump(my_settings, config)
