@@ -2,6 +2,7 @@ import helper.FileHelper as FileHelper
 import handler.LoginHandler as LoginHandler
 import setting
 import json
+from getpass import getpass
 
 class InitConfig:
     def __init__(self):
@@ -56,7 +57,7 @@ class InitConfig:
     def _login(self):
         print("Please Enter your Login Credentials")
         username = input("Username\t:\t")
-        password = input("Password\t:\t")
+        password = getpass(prompt="Password\t:\t")
         if self._vcs==1:
             if LoginHandler.GithubLogin(username, password).verify():
                 self._username = username
@@ -69,10 +70,13 @@ class InitConfig:
     def _save(self):
         my_settings = {}
         my_settings['vcs'] = {
-            "type":self._vcs,
-            "username":self._username,
-            "password":self._password
+            "type":self._vcs
         }
+        try:
+            my_settings['vcs']["username"]=self._username
+            my_settings['vcs']["password"]=self._password
+        except:
+            pass
         my_settings['path'] = self._projectPath
         with open(setting.CONFIG_FILE, 'w') as config:
             json.dump(my_settings, config)
