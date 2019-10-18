@@ -3,6 +3,7 @@ import handler.LoginHandler as LoginHandler
 import setting
 import json
 from getpass import getpass
+import model.config
 
 class InitConfig:
     def __init__(self):
@@ -78,5 +79,4 @@ class InitConfig:
         except:
             pass
         my_settings['path'] = self._projectPath
-        with open(setting.CONFIG_FILE, 'w') as config:
-            json.dump(my_settings, config)
+        model.config.Config(my_settings).save()

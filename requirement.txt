@@ -1,2 +1,2 @@
-PyGithub
-bitbucket-python
+PyGithub==1.43.8
+# bitbucket-python==0.2.2
