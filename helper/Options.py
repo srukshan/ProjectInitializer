@@ -1,5 +1,6 @@
 #Important:-
 #  Page to Find details of how to do - https://www.tutorialspoint.com/python/python_command_line_arguments.htm
+#  Page to Find details of how to do - https://gist.github.com/AtmaMani/4cdda473f02d70ed26035a3f191d5b73
 
 import sys, getopt
 
