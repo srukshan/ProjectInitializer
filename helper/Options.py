@@ -4,6 +4,9 @@
 from model.config import Config
 import argparse
 
+# TODO: in v2
+#   Get Language or Framework of Project
+#   Store language
 parser = argparse.ArgumentParser(description="Project Management Tool")
 
 parser.add_argument('proj_name', help="Enter the Name of the Project")
